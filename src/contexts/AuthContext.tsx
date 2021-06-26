@@ -1,4 +1,4 @@
-import { createContext, ReactNode, useContext, useState } from "react";
+import { createContext, ReactNode, useContext, useEffect, useState } from "react";
 import { auth, firebase } from "../services/firebase";
 import AuthContextType from "../types/AuthContextType";
 import UserType from "../types/UserType";
@@ -12,6 +12,14 @@ type PropsType = {
 export default function AuthContextProvider(props: PropsType) {
 
     const [user, setUser] = useState<UserType>();
+
+    useEffect(() => {
+        const unsubscribe = auth.onAuthStateChanged(user => {
+            if (user) updateUserState(user);
+        });
+
+        return () => unsubscribe();
+    }, []);
 
     async function signInWithGoogle() {
         const provider = new firebase.auth.GoogleAuthProvider();
