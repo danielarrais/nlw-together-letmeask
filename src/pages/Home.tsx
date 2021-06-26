@@ -1,6 +1,5 @@
-import { useContext } from 'react';
+
 import { useHistory } from 'react-router-dom';
-import { firebase, auth } from '../services/firebase'
 
 import illustrationImg from '../assets/images/illustration.svg';
 import logoImg from '../assets/images/logo.svg';
@@ -8,11 +7,11 @@ import logoGoogleImg from '../assets/images/google-icon.svg';
 import Button from '../components/Button'
 
 import '../styles/auth.scss';
-import { AuthContext } from '../contexts/AuthContext'
+import useAuth from '../hooks/useAuth';
 
 export default function Home() {
     const history = useHistory();
-    const { user, signInWithGoogle } = useContext(AuthContext);
+    const { user, signInWithGoogle } = useAuth();
 
     async function handleCreateRoom() {
         if (!user) {
