@@ -26,7 +26,6 @@ export default function Home() {
     }
 
     async function handleJoinRoom(event: FormEvent) {
-        event.preventDefault();
         if (roomCode.trim() === '') return;
 
         const roomRef = await database.ref(`rooms/${roomCode}`).get();
