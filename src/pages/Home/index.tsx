@@ -26,13 +26,19 @@ export default function Home() {
 
     async function handleJoinRoom(event: FormEvent) {
         event.preventDefault();
-        
+
         if (roomCode.trim() === '') return;
 
         const roomRef = await database.ref(`rooms/${roomCode}`).get();
 
         if (!roomRef.exists()) {
-            alert('Room does not exists!');
+            alert(`A sala #${roomCode} não existe!`);
+            return;
+        }
+
+
+        if (roomRef.val().closedAt) {
+            alert(`A sala #${roomCode} já foi encerrada!`);
             return;
         }
 
@@ -54,8 +60,8 @@ export default function Home() {
                 <div className="main-content">
                     <img src={logoImg} alt="Letmeask" />
                     <button onClick={handleCreateRoom} className="create-room">
-                        <img src={logoGoogleImg} alt="Logo do google" />
-                        Crie sua sala com o google
+                        {!user && <img src={logoGoogleImg} alt="Logo do google" />}
+                        Crie sua sala {!user ? 'com o google' : ''}
                     </button>
                     <div className="separator">ou entre em uma sala</div>
                     <form onSubmit={handleJoinRoom}>

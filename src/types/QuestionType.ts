@@ -12,6 +12,7 @@ type QuestionType = {
     }>
     likeCount: number,
     likeId: string | undefined,
+    closedAt?: Date,
 }
 
 export default QuestionType;

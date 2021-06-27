@@ -46,7 +46,7 @@ export default function useRoom(roomId: string) {
             }
         });
 
-    }, [roomId, user])
+    }, [roomId, user?.id])
 
     return { questions, title }
 }
