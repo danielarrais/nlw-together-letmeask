@@ -1,56 +1,28 @@
 import { useHistory, useParams } from 'react-router-dom';
 import { RoomCode } from '../components/RoomCode';
 import { database } from '../services/firebase';
-import { FormEvent, useEffect, useState, ChangeEvent } from 'react';
+import { FormEvent, useState, ChangeEvent } from 'react';
 import { History } from 'history';
 
 import logoImg from '../assets/images/logo.svg';
 import Button from '../components/Button';
 import useAuth from '../hooks/useAuth';
 import Question from '../components/Question';
-import QuestionType from '../types/Question';
 
 import '../styles/room.scss'
+import useRoom from '../hooks/useRoom';
 
 type RoomParamsType = { id: string }
-type FirebaseQuestionType = Record<string, QuestionType>
 
 export default function Room() {
+    const params = useParams<RoomParamsType>();
+    const history = useHistory();
+    const roomId = params.id;
     const { user, signInWithGoogle } = useAuth();
     const [newQuestion, setNewQuestion] = useState('');
-    const params = useParams<RoomParamsType>();
-    const roomId = params.id;
-    const history = useHistory();
+    const { questions, title } = useRoom(roomId);
 
     redirectIfNotExistingRoom(roomId, history);
-
-    useEffect(() => {
-        const roomRef = database.ref(`rooms/${roomId}`);
-
-        roomRef.on('value', room => {
-            const databaseRoom = room.val();
-
-            if (databaseRoom === null) return;
-
-            const firebaseQuestions: FirebaseQuestionType = databaseRoom.questions ?? {};
-            const parsedQuestions = Object.entries(firebaseQuestions).map<QuestionType>(([id, question]) => {
-                return {
-                    id: id,
-                    content: question.content,
-                    author: {
-                        name: question.author.name,
-                        avatar: question.author.avatar
-                    },
-                    isHighlighted: question.isHighlighted,
-                    isAnswered: question.isAnswered
-                }
-            });
-
-            setTitle(databaseRoom.title)
-            setQuestions(parsedQuestions);
-        });
-
-    }, [roomId])
 
     async function handleSendQuestion(event: FormEvent) {
         event.preventDefault();
