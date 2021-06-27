@@ -6,7 +6,12 @@ type QuestionType = {
         avatar: string
     },
     isHighlighted: boolean,
-    isAnswered: boolean
+    isAnswered: boolean,
+    likes?: Record<string, {
+        authorId: string
+    }>
+    likeCount: number,
+    likeId: string | undefined,
 }
 
 export default QuestionType;
