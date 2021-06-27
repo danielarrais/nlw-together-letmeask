@@ -1,16 +1,15 @@
 
 import { useHistory } from 'react-router-dom';
-import { FormEvent, useState } from 'react';
+import { FormEvent, useState, ChangeEvent } from 'react';
+import { database } from '../../services/firebase';
 
-import illustrationImg from '../assets/images/illustration.svg';
-import logoImg from '../assets/images/logo.svg';
-import logoGoogleImg from '../assets/images/google-icon.svg';
-import Button from '../components/Button'
+import illustrationImg from '../../assets/images/illustration.svg';
+import logoImg from '../../assets/images/logo.svg';
+import logoGoogleImg from '../../assets/images/google-icon.svg';
+import Button from '../../components/Button'
+import useAuth from '../../hooks/useAuth';
 
-import '../styles/auth.scss';
-import useAuth from '../hooks/useAuth';
-import { ChangeEvent } from 'react';
-import { database } from '../services/firebase';
+import './style.scss';
 
 export default function Home() {
     const history = useHistory();
@@ -43,7 +42,7 @@ export default function Home() {
     }
 
     return (
-        <div id="page-auth">
+        <div id="form-auth">
             <aside>
                 <img src={illustrationImg} alt="Ilustração simbolizando perguntas e respostas" />
                 <strong>Criei salas de Q&amp;A ao-vivo</strong>

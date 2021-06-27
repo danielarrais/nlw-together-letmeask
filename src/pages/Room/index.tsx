@@ -1,16 +1,16 @@
 import { useHistory, useParams } from 'react-router-dom';
-import { RoomCode } from '../components/RoomCode';
-import { database } from '../services/firebase';
+import { RoomCode } from '../../components/RoomCode';
+import { database } from '../../services/firebase';
 import { FormEvent, useState, ChangeEvent } from 'react';
 import { History } from 'history';
 
-import logoImg from '../assets/images/logo.svg';
-import Button from '../components/Button';
-import useAuth from '../hooks/useAuth';
-import Question from '../components/Question';
+import logoImg from '../../assets/images/logo.svg';
+import Button from '../../components/Button';
+import useAuth from '../../hooks/useAuth';
+import Question from '../../components/Question';
+import useRoom from '../../hooks/useRoom';
 
-import '../styles/room.scss'
-import useRoom from '../hooks/useRoom';
+import './style.scss'
 
 type RoomParamsType = { id: string }
 
